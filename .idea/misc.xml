@@ -3,8 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/drawable/border.xml" value="0.2585" />
+        <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/drawable/icon.xml" value="0.2265" />
+        <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/layout/activity_product_admin.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/layout/activity_product_customer.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/layout/activity_signin.xml" value="0.1" />
         <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/layout/activity_wish_list_product.xml" value="0.22826086956521738" />
       </map>
     </option>
