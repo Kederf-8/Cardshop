@@ -2,29 +2,46 @@ package com.example.cardshop;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.cardshop.model.CardModel;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class LoginActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
+public class LoginActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
+    Boolean stopUserInteractions;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide(); //nasconde la barra superiore
-        //firebaseAuth = FirebaseAuth.getInstance();
-        //firebaseAuth.signOut();
         setContentView(R.layout.activity_login);
+        Objects.requireNonNull(getSupportActionBar()).hide(); //nasconde la barra superiore
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.signOut();
+        stopUserInteractions = false;
+    }
+
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (stopUserInteractions) {
+            return true;
+        } else {
+            return super.dispatchTouchEvent(ev);
+        }
     }
 
     public void Login(View view) {
-        String email = ((EditText) findViewById(R.id.editText_SigninEmail)).getText().toString().toLowerCase();
-        String password = ((EditText) findViewById(R.id.editText_SigninPassword)).getText().toString().toLowerCase();
+        String email = ((EditText) findViewById(R.id.editText_LoginEmail)).getText().toString().toLowerCase();
+        String password = ((EditText) findViewById(R.id.editText_LoginPassword)).getText().toString().toLowerCase();
         int checkValidation = ValidationInputLogin(email, password);
         if (checkValidation < 0) {
             String toast;
@@ -61,6 +78,9 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this.getApplicationContext(), toast,
                         Toast.LENGTH_SHORT).show();
             }
+        } else if (checkValidation > 0) {
+            stopUserInteractions = true;
+            Firebase.Login(email, password, this);
         }
     }
 
@@ -94,5 +114,40 @@ public class LoginActivity extends AppCompatActivity {
             return -8;
         }
         return 1;
+    }
+
+    public void CallbackLogin(int operationState, HashMap<String, Object> user, ArrayList<CardModel> wishlist, String UID) {
+        String toast;
+        if (operationState == 1) {
+            toast = "Login Succesfull";
+            Toast.makeText(this.getApplicationContext(), toast,
+                    Toast.LENGTH_SHORT).show();
+            Intent intent;
+            if (UID.equals("i7Pux9iGA6hIEt0hP3HotnVgvSC")) {
+                intent = new Intent(LoginActivity.this, HomeAdminActivity.class);
+                intent.putExtra("user", user);
+            } else {
+                intent = new Intent(LoginActivity.this, HomeCustomerActivity.class);
+                intent.putExtra("user", user);
+                intent.putExtra("wishlist", wishlist);
+            }
+            startActivity(intent);
+            finish();
+        } else if (operationState == -1) {
+            stopUserInteractions = false;
+            toast = "User doesn't exist or the email wasn't verified";
+            Toast.makeText(this.getApplicationContext(), toast,
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void GetDataUser(String UID) {
+        Firebase.GetDataUser(UID, this);
+    }
+
+    public void GoToSignin(View view) {
+        startActivity(new Intent(LoginActivity.this, SigninActivity.class));
+        finish();
+        System.out.println("pressed");
     }
 }

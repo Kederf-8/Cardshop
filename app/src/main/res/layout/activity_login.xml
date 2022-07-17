@@ -14,36 +14,60 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar">
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
+        app:layout_constraintVertical_bias="0.0">
+
+        <Button
+            android:id="@+id/goToSignin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:background="@android:color/transparent"
+            android:onClick="GoToSignin"
+            android:text="Go to signin"
+            android:textAlignment="gravity"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:translationY="50sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_Login" />
 
         <TextView
             android:id="@+id/text_homeTitleRedirect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginStart="150dp"
+            android:layout_marginEnd="150dp"
+            android:layout_marginBottom="70dp"
             android:text="LOGIN"
             android:textColor="#FFFFFF"
             android:textSize="40sp"
+            app:layout_constraintBottom_toTopOf="@+id/editText_LoginEmail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <TextView
+            android:id="@+id/text_LoginEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="126dp"
+            android:layout_marginEnd="321dp"
+            android:text="Email"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-        <TextView
-            android:id="@+id/text_RegisterEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="44dp"
-            android:text="Email"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_homeTitleRedirect" />
-
         <EditText
-            android:id="@+id/editText_SigninEmail"
+            android:id="@+id/editText_LoginEmail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
@@ -51,25 +75,29 @@
             android:backgroundTint="#FFFFFF"
             android:ems="10"
             android:inputType="textEmailAddress"
+            android:minHeight="48dp"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_RegisterEmail" />
+            app:layout_constraintTop_toBottomOf="@+id/text_LoginEmail"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
-            android:id="@+id/text_RegisterPassword"
+            android:id="@+id/text_LoginPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="282dp"
             android:text="Password"
             android:textColor="#FFFFFF"
-            android:textSize="20dp"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_SigninEmail" />
+            app:layout_constraintTop_toBottomOf="@+id/editText_LoginEmail" />
 
         <EditText
-            android:id="@+id/editText_SigninPassword"
+            android:id="@+id/editText_LoginPassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
@@ -77,10 +105,12 @@
             android:backgroundTint="#FFFFFF"
             android:ems="10"
             android:inputType="textPassword"
+            android:minHeight="48dp"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_RegisterPassword" />/>
+            app:layout_constraintTop_toBottomOf="@+id/text_LoginPassword"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
             android:id="@+id/button_Login"
@@ -100,7 +130,7 @@
             app:backgroundTint="@null"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_SigninPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/editText_LoginPassword" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
