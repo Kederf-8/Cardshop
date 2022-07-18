@@ -8,12 +8,12 @@ import android.view.View;
 
 import java.util.Objects;
 
-public class ModifyProductActivity extends AppCompatActivity {
+public class DeleteProductActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modify_product);
+        setContentView(R.layout.activity_delete_product);
         Objects.requireNonNull(getSupportActionBar()).hide(); //nasconde la barra superiore
     }
 

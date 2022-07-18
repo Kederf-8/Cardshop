@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dip">
+
+    <ImageView
+        android:id="@+id/Image_item"
+        android:layout_width="103dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/Nome_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="175dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text=""
+        android:textAlignment="textStart"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/Descrizione_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="8dp"
+        android:text=""
+        android:textAlignment="viewStart" />
+
+    <TextView
+        android:id="@+id/Prezzo_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/delete"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_toEndOf="@+id/Valutazione_item"
+        android:text=""
+        android:textSize="20sp" />
+
+    <RatingBar
+        android:id="@+id/Valutazione_item"
+        style="@android:style/Widget.DeviceDefault.RatingBar.Indicator"
+        android:layout_width="180dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="-25dp"
+        android:layout_marginTop="95dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:progressTint="@color/black"
+        android:rating="0"
+        android:scaleX="0.68"
+        android:scaleY="0.68"
+        android:stepSize="0.1" />
+
+    <Switch
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="345dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="8dp"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+
+</RelativeLayout>

@@ -145,4 +145,9 @@ public class SigninActivity extends AppCompatActivity {
         }
         return 1;
     }
+
+    public void goBack(View view){
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
+    }
 }

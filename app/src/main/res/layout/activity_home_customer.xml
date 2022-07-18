@@ -35,7 +35,7 @@
                 app:layout_constraintVertical_bias="0.512"
                 app:srcCompat="@drawable/baseline_view_sidebar_24"
                 app:tint="#FFFFFF"
-                tools:ignore="UsingOnClickInXml" />
+                tools:ignore="UsingOnClickInXml,ImageContrastCheck" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/tickTitleCard"
@@ -80,287 +80,30 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <TextView
+                        android:id="@+id/text_Products"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="4dp"
+                        android:text="Products"
+                        android:textColor="@color/white"
+                        android:textSize="40sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/text_titleAddProduct"
-                        app:layout_constraintVertical_bias="0.0">
+                        app:layout_constraintTop_toTopOf="parent" />
 
+                    <ListView
+                        android:id="@+id/item_list"
+                        android:layout_width="fill_parent"
+                        android:layout_height="578dp"
+                        android:layout_marginBottom="6dp"
+                        android:dividerHeight="1dp"
+                        tools:ignore="NestedScrolling" />
 
-                        <TextView
-                            android:id="@+id/text_InEvidence"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="4dp"
-                            android:text="In Evidence"
-                            android:textColor="#FFFFFF"
-                            android:textSize="40sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/TextView_InEvidenceList"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Most Rating"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/text_InEvidence" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/InEvidenceList"
-                            android:layout_width="0dp"
-                            android:layout_height="200dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/TextView_InEvidenceList" />
-
-                        <TextView
-                            android:id="@+id/TextView_DiscountedList"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Discounted"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/InEvidenceList" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/DiscountedList"
-                            android:layout_width="0dp"
-                            android:layout_height="200dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/TextView_DiscountedList" />
-
-                        <TextView
-                            android:id="@+id/TextView_Empty"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="No Products Found"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/TextView_CategoryList"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Category"
-                            android:textColor="@color/white"
-                            android:textSize="40sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/DiscountedList" />
-
-                        <TextView
-                            android:id="@+id/textView_GamesCatTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Pokemon"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/TextView_CategoryList" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/GameProducts"
-                            android:layout_width="0dp"
-                            android:layout_height="200dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView_GamesCatTitle" />
-
-                        <TextView
-                            android:id="@+id/textView_UtilityCatTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Yu-gi-oh"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/GameProducts" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/UtilityProducts"
-                            android:layout_width="0dp"
-                            android:layout_height="200dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView_UtilityCatTitle">
-
-                        </androidx.recyclerview.widget.RecyclerView>
-
-                        <TextView
-                            android:id="@+id/textView_PhotoEditingCatTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Magic"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/UtilityProducts" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/PhotoEditingProducts"
-                            android:layout_width="0dp"
-                            android:layout_height="200dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView_PhotoEditingCatTitle">
-
-                        </androidx.recyclerview.widget.RecyclerView>
-
-                        <TextView
-                            android:id="@+id/textView_VideoMakingCatTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="20dp"
-                            android:text="/"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/PhotoEditingProducts" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/VideoMakingProducts"
-                            android:layout_width="0dp"
-                            android:layout_height="200dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="1.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView_VideoMakingCatTitle">
-
-                        </androidx.recyclerview.widget.RecyclerView>
-
-                        <TextView
-                            android:id="@+id/textView_FinanceCatTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="20dp"
-                            android:text="/"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/VideoMakingProducts" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/FinanceProducts"
-                            android:layout_width="0dp"
-                            android:layout_height="200dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="1.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView_FinanceCatTitle">
-
-                        </androidx.recyclerview.widget.RecyclerView>
-
-                        <TextView
-                            android:id="@+id/textView_ProductivityCatTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="20dp"
-                            android:text="/"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/FinanceProducts" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/ProductivityProducts"
-                            android:layout_width="0dp"
-                            android:layout_height="200dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView_ProductivityCatTitle">
-
-                        </androidx.recyclerview.widget.RecyclerView>
-
-                        <TextView
-                            android:id="@+id/textView_EntertainmentCatTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="20dp"
-                            android:text="/"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/ProductivityProducts" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/EntertainmentProducts"
-                            android:layout_width="0dp"
-                            android:layout_height="200dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView_EntertainmentCatTitle">
-
-                        </androidx.recyclerview.widget.RecyclerView>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
             </ScrollView>
 

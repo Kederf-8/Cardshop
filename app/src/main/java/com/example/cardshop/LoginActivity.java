@@ -18,7 +18,7 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
-    Boolean stopUserInteractions;
+    //Boolean stopUserInteractions;
 
 
     @Override
@@ -28,15 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide(); //nasconde la barra superiore
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signOut();
-        stopUserInteractions = false;
-    }
-
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (stopUserInteractions) {
-            return true;
-        } else {
-            return super.dispatchTouchEvent(ev);
-        }
+        //stopUserInteractions = false;
     }
 
     public void Login(View view) {
@@ -79,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         } else if (checkValidation > 0) {
-            stopUserInteractions = true;
+            //stopUserInteractions = true;
             Firebase.Login(email, password, this);
         }
     }
@@ -123,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this.getApplicationContext(), toast,
                     Toast.LENGTH_SHORT).show();
             Intent intent;
-            if (UID.equals("i7Pux9iGA6hIEt0hP3HotnVgvSC")) {
+            if (UID.equals("XXPl2AXSpXQ9TyPcpSZnrkXB7Ie2")) {
                 intent = new Intent(LoginActivity.this, HomeAdminActivity.class);
                 intent.putExtra("user", user);
             } else {
@@ -134,8 +126,8 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else if (operationState == -1) {
-            stopUserInteractions = false;
-            toast = "User doesn't exist or the email wasn't verified";
+            //stopUserInteractions = false;
+            toast = "User doesn't exist | the email wasn't verified | the password is incorrect";
             Toast.makeText(this.getApplicationContext(), toast,
                     Toast.LENGTH_SHORT).show();
         }
@@ -149,5 +141,10 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(LoginActivity.this, SigninActivity.class));
         finish();
         System.out.println("pressed");
+    }
+
+    public void goBack(View view){
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 }
