@@ -4,12 +4,13 @@ import java.io.Serializable;
 
 public class UserModel implements Serializable {
     public String UID;
-    public String password;
     public String email;
+    public String password;
 
-    UserModel(String UID, String password, String email) {
+
+    UserModel(String UID, String email, String password) {
         this.UID = UID;
-        this.password = password;
         this.email = email;
+        this.password = password;
     }
 }

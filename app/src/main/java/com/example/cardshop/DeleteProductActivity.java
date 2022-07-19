@@ -21,4 +21,6 @@ public class DeleteProductActivity extends AppCompatActivity {
         startActivity(new Intent(this, HomeAdminActivity.class));
         finish();
     }
+
+
 }

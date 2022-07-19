@@ -22,15 +22,15 @@ public class HomeAdminActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
-    public void insertCard(View view){
+    public void goToInsertCard(View view){
         startActivity(new Intent(this, InsertProductActivity.class));
     }
 
-    public void removeCard(View view){
+    public void goToRemoveCard(View view){
         startActivity(new Intent(this, DeleteProductActivity.class));
     }
 
-    public void updateCard(View view){
+    public void goToUpdateCard(View view){
         startActivity(new Intent(this, ModifyProductActivity.class));
     }
 

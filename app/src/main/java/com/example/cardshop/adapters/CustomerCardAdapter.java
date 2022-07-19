@@ -1,93 +1,95 @@
 package com.example.cardshop.adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Switch;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-import com.example.cardshop.HomeCustomerActivity;
+import androidx.annotation.RequiresApi;
+
 import com.example.cardshop.R;
 import com.example.cardshop.model.CardModel;
 import com.example.cardshop.model.CustomerModel;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import java.util.ArrayList;
 
-public class CustomerCardAdapter extends RecyclerView.Adapter<CustomerCardAdapter.ViewHolder> {
-    private static final String listID = "dynamicProductListAdmin";
-    private ArrayList<CardModel> products;
-    private final HomeCustomerActivity homeCustomerActivity;
-    private final CustomerModel customer;
+import java.util.List;
 
-    public CustomerCardAdapter(Context context, ArrayList<CardModel> products, HomeCustomerActivity homeCustomerActivity, CustomerModel customer) {
-        this.products = products;
-        this.homeCustomerActivity = homeCustomerActivity;
-        this.customer = customer;
+public class CustomerCardAdapter extends ArrayAdapter<CardModel> {
+
+    public CustomerCardAdapter(Context context, int textViewResourceId, List<CardModel> objects) {
+        super(context, textViewResourceId, objects);
     }
 
-    @NonNull
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_customer_product, parent, false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
-    }
+    public View getView(int position, View convertView, ViewGroup parent) {
+        List<CardModel> wishlist = CustomerModel.getWishlist();
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        convertView = inflater.inflate(R.layout.card_customer, null);
+        TextView name = convertView.findViewById(R.id.Nome_item);
+        TextView description = convertView.findViewById(R.id.Descrizione_item);
+        TextView game = convertView.findViewById(R.id.Game_item);
+        TextView price = convertView.findViewById(R.id.Prezzo_item);
+        RatingBar rating = convertView.findViewById(R.id.Valutazione_item);
+        Switch wished = convertView.findViewById(R.id.Button_wishlist);
+        ImageView image = convertView.findViewById(R.id.Image_item);
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(products.get(position).image);
+        // In questo modo si prendono gli attributi specifici dell'elemento contenuto nella lista objects
+        // si utilizzano i metodi della classe Items
+        CardModel card = getItem(position);
+        name.setText(card.getName());
+        description.setText(card.getDescription());
+        game.setText(card.getGame());
+        price.setText(card.getPrice());
+        rating.setRating((float) Double.parseDouble(String.valueOf(card.getRating())));
 
-        holder.UID.setText(products.get(position).UID);
-        holder.name.setText(products.get(position).name);
-        holder.price.setText(products.get(position).price);
-        holder.description.setText(products.get(position).description);
-        holder.game.setText(products.get(position).game);
-        //GlideApp.with(context).asBitmap().load(storageReference).into(holder.image);
-        holder.ratingBar.setRating(products.get(position).rating);
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        StorageReference storageReference = firebaseStorage.getReference();
 
-        holder.image.setOnClickListener(new View.OnClickListener() {
+        StorageReference imageReference = storageReference.child(card.getImage());
+
+        long MAXBYTES = 1024 * 1024;
+
+        imageReference.getBytes(MAXBYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
-            public void onClick(View view) {
-                String UID = products.get(position).UID;
-                String name = products.get(position).name;
-                String image = products.get(position).image;
-                String price = products.get(position).price;
-                String description = products.get(position).description;
-                String game = products.get(position).game;
-                String rating = products.get(position).rating.toString();
-                homeCustomerActivity.ShowDetails(UID, name, price, description, game, image, rating, customer);
+            public void onSuccess(byte[] bytes) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                image.setImageBitmap(bitmap);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
             }
         });
-    }
 
-    @Override
-    public int getItemCount() {
-        return products.size();
-    }
+        //Si imposta lo switch a true se l'utente nella sua lista desideri salvata nel server ha il prodotto salvato
+        /*for (CardModel item : wishlist) {
+            if (item.getName().equals(card.getName())) {
+                wished.setChecked(true);
+            }
+        }*/
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView UID;
-        TextView name;
-        TextView price;
-        TextView description;
-        TextView game;
-        ImageView image;
-        RatingBar ratingBar;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            /*image = itemView.findViewById(R.id.cardCustomerProduct_Photo);
-            name = itemView.findViewById(R.id.cardCustomerProduct_Title);
-            price = itemView.findViewById(R.id.cardCustomerProduct_Price);
-            ratingBar = itemView.findViewById(R.id.cardCustomerProduct_RatingBar);
-            game = itemView.findViewById(R.id.cardCustomerProduct_Category);
-            UID = itemView.findViewById(R.id.cardCustomerProduct_UID);
-            description = itemView.findViewById(R.id.cardCustomerProduct_Description);*/
-        }
+        //Se lo switch cambia di stato l'item viene aggiunto o rimosso dalla lista preferiti
+        wished.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                CustomerModel.addToTheWishlist(card);
+            } else {
+                CustomerModel.removeFromWishlist(card);
+            }
+        });
+        return convertView;
     }
 }

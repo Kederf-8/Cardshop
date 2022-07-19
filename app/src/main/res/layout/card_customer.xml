@@ -2,27 +2,26 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="5dip">
 
     <ImageView
         android:id="@+id/Image_item"
-        android:layout_width="103dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="130dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp" />
 
     <TextView
         android:id="@+id/Nome_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="175dp"
+        android:layout_marginStart="125dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:text=""
         android:textAlignment="textStart"
         android:textSize="20sp"
@@ -34,7 +33,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="125dp"
         android:layout_marginTop="45dp"
-        android:layout_marginEnd="8dp"
+        android:text=""
+        android:textAlignment="viewStart" />
+
+    <TextView
+        android:id="@+id/Game_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="70dp"
         android:text=""
         android:textAlignment="viewStart" />
 
@@ -42,9 +49,9 @@
         android:id="@+id/Prezzo_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/delete"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="68dp"
+        android:layout_below="@+id/Button_wishlist"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:layout_toEndOf="@+id/Valutazione_item"
@@ -56,9 +63,9 @@
         style="@android:style/Widget.DeviceDefault.RatingBar.Indicator"
         android:layout_width="180dp"
         android:layout_height="46dp"
-        android:layout_marginStart="-25dp"
+        android:layout_marginStart="90dp"
         android:layout_marginTop="95dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="0dp"
         android:layout_marginBottom="8dp"
         android:isIndicator="true"
         android:numStars="5"
@@ -69,12 +76,14 @@
         android:stepSize="0.1" />
 
     <Switch
-        android:id="@+id/delete"
+        android:id="@+id/Button_wishlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="345dp"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="8dp"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
 

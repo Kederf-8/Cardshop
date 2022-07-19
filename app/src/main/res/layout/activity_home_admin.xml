@@ -39,15 +39,15 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/newCardButton"
+        android:id="@+id/insertCardButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="160dp"
         android:backgroundTint="#FFFFFF"
-        android:onClick="insertCard"
-        android:text="New Card"
+        android:onClick="goToInsertCard"
+        android:text="Insert Card"
         android:textColor="#00BCD4"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,13 +62,13 @@
         android:layout_marginTop="80dp"
         android:layout_marginEnd="160dp"
         android:backgroundTint="@color/white"
-        android:onClick="removeCard"
+        android:onClick="goToRemoveCard"
         android:text="Delete Card"
         android:textColor="#00BCD4"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newCardButton" />
+        app:layout_constraintTop_toBottomOf="@+id/insertCardButton" />
 
     <Button
         android:id="@+id/modifyCardButton"
@@ -78,7 +78,7 @@
         android:layout_marginTop="80dp"
         android:layout_marginEnd="160dp"
         android:backgroundTint="@color/white"
-        android:onClick="updateCard"
+        android:onClick="goToUpdateCard"
         android:text="Modify Card"
         android:textColor="#00BCD4"
         android:textSize="20sp"

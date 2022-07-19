@@ -10,7 +10,7 @@
         <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/drawable/baseline_view_sidebar_24.xml" value="0.1935" />
         <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/drawable/border.xml" value="0.2585" />
         <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/drawable/icon.xml" value="0.2265" />
-        <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/layout/activity_delete_product.xml" value="0.24010416666666667" />
+        <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/layout/activity_delete_product.xml" value="0.264" />
         <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/layout/activity_home_admin.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/layout/activity_home_customer.xml" value="0.25" />
         <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/layout/activity_insert_product.xml" value="0.25416666666666665" />
@@ -22,6 +22,8 @@
         <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/layout/activity_signin.xml" value="0.264" />
         <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/layout/activity_wish_list.xml" value="0.23550724637681159" />
         <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/layout/activity_wish_list_product.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/layout/card_admin_delete.xml" value="0.253125" />
+        <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/layout/card_customer.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/layout/card_customer_product.xml" value="0.2" />
         <entry key="..\:/Users/napol/AndroidStudioProjects/Cardshop/app/src/main/res/menu/side_menu_customer.xml" value="0.25416666666666665" />
       </map>

@@ -15,11 +15,18 @@ public class InsertProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert_product);
         Objects.requireNonNull(getSupportActionBar()).hide(); //nasconde la barra superiore
+    }
+
+    public void goBack(View view) {
+        startActivity(new Intent(this, HomeAdminActivity.class));
+        finish();
+    }
+
+    public void addImage(View view) {
 
     }
 
-    public void goBack(View view){
-        startActivity(new Intent(this, HomeAdminActivity.class));
-        finish();
+    public void insertCard(View view) {
+
     }
 }

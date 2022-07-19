@@ -19,7 +19,7 @@ import java.util.Objects;
 public class LoginActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     //Boolean stopUserInteractions;
-
+    static boolean admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         String domain = email.substring(at + 1);
         System.out.println(domain);
-        if (!domain.equals("gmail.com") && !domain.equals("outlook.it") && !domain.equals("outlook.com") && !domain.equals("icloud.com") && !domain.equals("yahoo.com") && !domain.equals("yahoo.it") && !domain.equals("live.com") && !domain.equals("hotmail.com") && !domain.equals("hotmail.it")) {
+        if (!domain.equals("gmail.com") && !domain.equals("outlook.it") && !domain.equals("outlook.com") && !domain.equals("icloud.com") && !domain.equals("yahoo.com") && !domain.equals("yahoo.it") && !domain.equals("live.com") && !domain.equals("hotmail.com") && !domain.equals("hotmail.it") && !domain.equals("libero.it")) {
             //incorrect domain
             return -8;
         }
@@ -116,9 +116,11 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
             Intent intent;
             if (UID.equals("XXPl2AXSpXQ9TyPcpSZnrkXB7Ie2")) {
+                admin = true;
                 intent = new Intent(LoginActivity.this, HomeAdminActivity.class);
                 intent.putExtra("user", user);
             } else {
+                admin = false;
                 intent = new Intent(LoginActivity.this, HomeCustomerActivity.class);
                 intent.putExtra("user", user);
                 intent.putExtra("wishlist", wishlist);
@@ -143,8 +145,12 @@ public class LoginActivity extends AppCompatActivity {
         System.out.println("pressed");
     }
 
-    public void goBack(View view){
+    public void goBack(View view) {
         startActivity(new Intent(this, MainActivity.class));
         finish();
+    }
+
+    public static boolean getAdmin() {
+        return admin;
     }
 }

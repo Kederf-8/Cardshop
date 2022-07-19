@@ -60,21 +60,19 @@ public class Firebase {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 HashMap<String, Object> user = new HashMap<>();
                 user.put("UID", documentSnapshot.getId());
-                user.put("name", documentSnapshot.getString("name"));
-                user.put("surname", documentSnapshot.getString("surname"));
                 user.put("email", documentSnapshot.getString("email"));
                 user.put("password", documentSnapshot.getString("password"));
                 ArrayList<CardModel> wishlist = new ArrayList<>();
                 ArrayList<HashMap<String, Object>> listFirebase = (ArrayList<HashMap<String, Object>>) documentSnapshot.getData().get("wishlist");
                 for (HashMap<String, Object> product : listFirebase) {
-                    String id = product.get("UID").toString();
+                    String uid = product.get("UID").toString();
                     String name = product.get("name").toString();
                     String image = product.get("image").toString();
                     String price = product.get("price").toString();
                     String description = product.get("description").toString();
                     String game = product.get("game").toString();
-                    Integer rating = Integer.parseInt(product.get("rating").toString());
-                    wishlist.add(new CardModel(id, name, price, description, image, rating, game));
+                    Double rating = Double.parseDouble(product.get("rating").toString());
+                    wishlist.add(new CardModel(uid, name, price, description, image, rating, game));
                 }
                 activity.CallbackLogin(1, user, wishlist, ID);
             }
@@ -89,67 +87,12 @@ public class Firebase {
     public static void SaveDataUser(String collection, String UID, Map<String, Object> object, SigninActivity activity) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference doc = db.collection(collection).document(UID);
-        doc.set(object).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                System.out.println("utente registrato");
-                activity.CallbackRegister(1);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                System.out.println("probemi durante la registrazione dedll'utente");
-                activity.CallbackRegister(-1);
-            }
+        doc.set(object).addOnSuccessListener(unused -> {
+            System.out.println("utente registrato");
+            activity.CallbackRegister(1);
+        }).addOnFailureListener(e -> {
+            System.out.println("probemi durante la registrazione dedll'utente");
+            activity.CallbackRegister(-1);
         });
-    }
-
-    public static void GetAllProductsCustomerActivity(HomeCustomerActivity activity) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Products").orderBy("title").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                ArrayList<CardModel> allCards = new ArrayList<>();
-                ArrayList<CardModel> cardGamePokemon = new ArrayList<>();
-                ArrayList<CardModel> cardGameYugioh = new ArrayList<>();
-                ArrayList<CardModel> cardGameMagic = new ArrayList<>();
-                ArrayList<CardModel> cardGameDragonball = new ArrayList<>();
-                ArrayList<CardModel> cardGameDigimon = new ArrayList<>();
-                for (DocumentSnapshot product : queryDocumentSnapshots) {
-                    String UID = product.getId();
-                    String name = product.getString("name");
-                    String image = product.getString("image");
-                    String description = product.getString("description");
-                    String price = product.getString("price");
-                    Integer rating = Integer.parseInt(product.getString("rating"));
-                    String game = product.getString("game");
-                    CardModel p = new CardModel(UID, name, price, description, image, rating, game);
-                    allCards.add(p);
-                    if (game.equalsIgnoreCase("pokemon")) {
-                        cardGamePokemon.add(p);
-                    }
-                    if (game.equalsIgnoreCase("yugioh")) {
-                        cardGameYugioh.add(p);
-                    }
-                    if (game.equalsIgnoreCase("magic")) {
-                        cardGameMagic.add(p);
-                    }
-                    if (game.equalsIgnoreCase("dragonball")) {
-                        cardGameDragonball.add(p);
-                    }
-                    if (game.equalsIgnoreCase("digimon")) {
-                        cardGameDigimon.add(p);
-                    }
-                }
-                activity.initProducts(allCards, cardGamePokemon, cardGameYugioh, cardGameMagic, cardGameDragonball, cardGameDigimon);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                System.out.println("problemi");
-            }
-        });
-
     }
 }

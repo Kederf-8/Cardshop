@@ -1,24 +1,27 @@
 package com.example.cardshop;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 
+import com.example.cardshop.adapters.CustomerCardAdapter;
 import com.example.cardshop.model.CardModel;
-import com.example.cardshop.model.CustomerModel;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 public class HomeCustomerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,13 +30,8 @@ public class HomeCustomerActivity extends AppCompatActivity implements Navigatio
     private boolean statusSideBar;
     HashMap<String, String> user;
     ArrayList<CardModel> wishlist;
-    ArrayList<CardModel> allCards;
-    ArrayList<CardModel> cardGamePokemon;
-    ArrayList<CardModel> cardGameYugioh;
-    ArrayList<CardModel> cardGameMagic;
-    ArrayList<CardModel> cardGameDragonball;
-    ArrayList<CardModel> cardGameDigimon;
-    private CustomerModel customer;
+    FirebaseFirestore firestore;
+    List<CardModel> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +43,9 @@ public class HomeCustomerActivity extends AppCompatActivity implements Navigatio
         user = (HashMap<String, String>) getIntent().getSerializableExtra("user");
         wishlist = (ArrayList<CardModel>) getIntent().getSerializableExtra("wishlist");
         setNavigationViewListener();
+        firestore = FirebaseFirestore.getInstance();
+        list = new LinkedList<>();
+        cardFetch(list);
     }
 
     public void openSideBarMenu(View view) {
@@ -90,112 +91,38 @@ public class HomeCustomerActivity extends AppCompatActivity implements Navigatio
         return true;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void initProducts(ArrayList<CardModel> allCards, ArrayList<CardModel> cardGamePokemon, ArrayList<CardModel> cardGameYugioh, ArrayList<CardModel> cardGameMagic, ArrayList<CardModel> cardGameDragonball, ArrayList<CardModel> cardGameDigimon) {
-        this.allCards = allCards;
-        this.cardGamePokemon = cardGamePokemon;
-        this.cardGameYugioh = cardGameYugioh;
-        this.cardGameMagic = cardGameMagic;
-        this.cardGameDragonball = cardGameDragonball;
-        this.cardGameDigimon = cardGameDigimon;
-
-        allCards.forEach(productModel -> System.out.println("allCards: " + productModel.name));
-        cardGamePokemon.forEach(productModel -> System.out.println("pokemon: " + productModel.name));
-        cardGameYugioh.forEach(productModel -> System.out.println("utility: " + productModel.name));
-        cardGameMagic.forEach(productModel -> System.out.println("photo: " + productModel.name));
-        cardGameDragonball.forEach(productModel -> System.out.println("video: " + productModel.name));
-        cardGameDigimon.forEach(productModel -> System.out.println("fiannce: " + productModel.name));
-        //initList();
+    public void cardFetch(List<CardModel> list) {
+        //si Scaricano tutti i prodotti
+        firestore.collection("cards")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            HashMap<String, Object> info = (HashMap<String, Object>) document.getData();
+                            //Si creano i prodotti e si aggiungono ad una lista
+                            CardModel card = new CardModel((String) info.get("UID"), (String) info.get("name"), (String) info.get("price"), (String) info.get("description"), (String) info.get("image"), (Double) info.get("rating"), (String) info.get("game"));
+                            list.add(card);
+                        }
+                        //si richiama l'adapter
+                        setAdapter(list);
+                    } else {
+                        System.out.println("Error getting documents: " + task.getException());
+                    }
+                });
     }
 
-    /*public void initList() {
-        RecyclerView.Adapter adapter;
-        TextView title;
-        RecyclerView recyclerView;
-        if (!allCards.isEmpty()) {
-            recyclerView = findViewById(R.id.InEvidenceList);
-            adapter = new CustomerCardAdapter(this, allCards, this, customer);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+    public void setAdapter(List<CardModel> list) {
+        ListView listView = (ListView) findViewById(R.id.item_list);
+        // Si distingue tra chi è l'utente, se un utente base o l'admin
+        if (LoginActivity.getAdmin()) {
+            // Adapter admin
+            CustomerCardAdapter adapter = new CustomerCardAdapter(this, R.layout.card_customer, list);
+            listView.setAdapter(adapter);
         } else {
-            title = findViewById(R.id.TextView_InEvidenceList);
-            title.setVisibility(View.GONE);
-            recyclerView = findViewById(R.id.InEvidenceList);
-            recyclerView.setVisibility(View.GONE);
+            // Adapter Client
+            System.out.println("Adapter client");
+            CustomerCardAdapter adapter = new CustomerCardAdapter(this, R.layout.card_customer, list);
+            listView.setAdapter(adapter);
         }
-
-        if (!cardGamePokemon.isEmpty()) {
-            recyclerView = findViewById(R.id.GameProducts);
-            adapter = new CustomerCardAdapter(this, cardGamePokemon, this, customer);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        } else {
-            title = findViewById(R.id.textView_GamesCatTitle);
-            title.setVisibility(View.GONE);
-            recyclerView = findViewById(R.id.GameProducts);
-            recyclerView.setVisibility(View.GONE);
-        }
-
-        if (!cardGameYugioh.isEmpty()) {
-            recyclerView = findViewById(R.id.UtilityProducts);
-            adapter = new CustomerCardAdapter(this, cardGameYugioh, this, customer);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        } else {
-            title = findViewById(R.id.textView_UtilityCatTitle);
-            title.setVisibility(View.GONE);
-            recyclerView = findViewById(R.id.UtilityProducts);
-            recyclerView.setVisibility(View.GONE);
-        }
-
-        if (!cardGameMagic.isEmpty()) {
-            recyclerView = findViewById(R.id.PhotoEditingProducts);
-            adapter = new CustomerCardAdapter(this, cardGameMagic, this, customer);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        } else {
-            title = findViewById(R.id.textView_PhotoEditingCatTitle);
-            title.setVisibility(View.GONE);
-            recyclerView = findViewById(R.id.PhotoEditingProducts);
-            recyclerView.setVisibility(View.GONE);
-        }
-
-        if (!cardGameDragonball.isEmpty()) {
-            recyclerView = findViewById(R.id.VideoMakingProducts);
-            adapter = new CustomerCardAdapter(this, cardGameDragonball, this, customer);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        } else {
-            title = findViewById(R.id.textView_VideoMakingCatTitle);
-            title.setVisibility(View.GONE);
-            recyclerView = findViewById(R.id.VideoMakingProducts);
-            recyclerView.setVisibility(View.GONE);
-        }
-
-        if (!cardGameDigimon.isEmpty()) {
-            recyclerView = findViewById(R.id.FinanceProducts);
-            adapter = new CustomerCardAdapter(this, cardGameDigimon, this, customer);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        } else {
-            title = findViewById(R.id.textView_FinanceCatTitle);
-            title.setVisibility(View.GONE);
-            recyclerView = findViewById(R.id.FinanceProducts);
-            recyclerView.setVisibility(View.GONE);
-        }
-    }*/
-
-    public void ShowDetails(String UID, String name, String image, String price, String description, String game, String rating, CustomerModel customer) {
-        Intent intent = new Intent(HomeCustomerActivity.this, ProductCustomerActivity.class);
-        intent.putExtra("UID", UID);
-        intent.putExtra("name", name);
-        intent.putExtra("price", price);
-        intent.putExtra("description", description);
-        intent.putExtra("image", image);
-        intent.putExtra("game", game);
-        intent.putExtra("rating", rating);
-        intent.putExtra("wishlist", customer.wishlist);
-        intent.putExtra("user", customer);
-        startActivityForResult(intent, 1);
     }
 }
