@@ -1,25 +1,44 @@
 package com.example.cardshop.model;
 
+import android.annotation.SuppressLint;
+
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerModel extends UserModel implements Serializable {
-    public static ArrayList<CardModel> wishlist;
+    private static List<CardModel> wishlist;
+    private static DocumentReference user;
+    private static String email;
 
-    public CustomerModel(String UID, String email, String password, ArrayList<CardModel> wishlist) {
+    @SuppressLint("StaticFieldLeak")
+    private static FirebaseFirestore db;
+
+    public CustomerModel(String UID, String email, String password) {
         super(UID, email, password);
-        CustomerModel.wishlist = wishlist;
+        CustomerModel.wishlist = new ArrayList<>();
+        db = FirebaseFirestore.getInstance();
     }
 
-    public static ArrayList<CardModel> getWishlist() {
+    public static List<CardModel> getWishlist() {
         return wishlist;
     }
 
-    public static void addToTheWishlist(CardModel card){
-        wishlist.add(card);
+    public static void addToTheWishlist(CardModel card) {
+        if (!wishlist.contains(card)) {
+            wishlist.add(card);
+            user = db.collection("Users").document(email);
+            user.update("wishlist", FieldValue.arrayUnion(card.getName()));
+        } else {
+            System.out.println("Non si aggiunge l'elemento, già è nella lista preferiti");
+        }
     }
 
-    public static void removeFromWishlist(CardModel card){
+    public static void removeFromWishlist(CardModel card) {
         wishlist.remove(card);
     }
 }

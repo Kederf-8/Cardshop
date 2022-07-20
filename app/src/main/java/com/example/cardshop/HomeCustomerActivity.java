@@ -92,18 +92,15 @@ public class HomeCustomerActivity extends AppCompatActivity implements Navigatio
     }
 
     public void cardFetch(List<CardModel> list) {
-        //si Scaricano tutti i prodotti
         firestore.collection("cards")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             HashMap<String, Object> info = (HashMap<String, Object>) document.getData();
-                            //Si creano i prodotti e si aggiungono ad una lista
                             CardModel card = new CardModel((String) info.get("UID"), (String) info.get("name"), (String) info.get("price"), (String) info.get("description"), (String) info.get("image"), (Double) info.get("rating"), (String) info.get("game"));
                             list.add(card);
                         }
-                        //si richiama l'adapter
                         setAdapter(list);
                     } else {
                         System.out.println("Error getting documents: " + task.getException());
@@ -112,17 +109,8 @@ public class HomeCustomerActivity extends AppCompatActivity implements Navigatio
     }
 
     public void setAdapter(List<CardModel> list) {
-        ListView listView = (ListView) findViewById(R.id.item_list);
-        // Si distingue tra chi è l'utente, se un utente base o l'admin
-        if (LoginActivity.getAdmin()) {
-            // Adapter admin
-            CustomerCardAdapter adapter = new CustomerCardAdapter(this, R.layout.card_customer, list);
-            listView.setAdapter(adapter);
-        } else {
-            // Adapter Client
-            System.out.println("Adapter client");
-            CustomerCardAdapter adapter = new CustomerCardAdapter(this, R.layout.card_customer, list);
-            listView.setAdapter(adapter);
-        }
+        ListView listView = findViewById(R.id.item_list);
+        CustomerCardAdapter adapter = new CustomerCardAdapter(this, R.layout.card_customer, list);
+        listView.setAdapter(adapter);
     }
 }

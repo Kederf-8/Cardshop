@@ -8,46 +8,41 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.Switch;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import com.example.cardshop.R;
+import com.example.cardshop.model.AdminModel;
 import com.example.cardshop.model.CardModel;
 import com.example.cardshop.model.CustomerModel;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
-public class CustomerCardAdapter extends ArrayAdapter<CardModel> {
-
-    public CustomerCardAdapter(Context context, int textViewResourceId, List<CardModel> objects) {
+public class AdminDeleteCardAdapter extends ArrayAdapter<CardModel> {
+    public AdminDeleteCardAdapter(Context context, int textViewResourceId, List<CardModel> objects) {
         super(context, textViewResourceId, objects);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        List<CardModel> wishlist = CustomerModel.getWishlist();
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.card_customer, null);
-        TextView name = convertView.findViewById(R.id.Nome_item);
-        TextView description = convertView.findViewById(R.id.Descrizione_item);
-        TextView game = convertView.findViewById(R.id.Game_item);
-        TextView price = convertView.findViewById(R.id.Prezzo_item);
-        RatingBar rating = convertView.findViewById(R.id.Valutazione_item);
-        Switch wished = convertView.findViewById(R.id.Button_wishlist);
-        ImageView image = convertView.findViewById(R.id.Image_item);
+        convertView = inflater.inflate(R.layout.card_admin_delete, null);
+        TextView name = convertView.findViewById(R.id.nameCardDelete);
+        TextView description = convertView.findViewById(R.id.descriptionCardDelete);
+        TextView game = convertView.findViewById(R.id.gameCardDelete);
+        TextView price = convertView.findViewById(R.id.priceCardDelete);
+        RatingBar rating = convertView.findViewById(R.id.ratingCardDelete);
+        ImageButton delete = convertView.findViewById(R.id.deleteButton);
+        ImageView image = convertView.findViewById(R.id.imageCardDelete);
 
-        // In questo modo si prendono gli attributi specifici dell'elemento contenuto nella lista objects
-        // si utilizzano i metodi della classe Items
         CardModel card = getItem(position);
         name.setText(card.getName());
         description.setText(card.getDescription());
@@ -67,21 +62,16 @@ public class CustomerCardAdapter extends ArrayAdapter<CardModel> {
             image.setImageBitmap(bitmap);
         }).addOnFailureListener(e -> {});
 
-        //Si imposta lo switch a true se l'utente nella sua lista desideri salvata nel server ha il prodotto salvato
-        /*for (CardModel item : wishlist) {
-            if (item.getName().equals(card.getName())) {
-                wished.setChecked(true);
-            }
-        }*/
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
-        //Se lo switch cambia di stato l'item viene aggiunto o rimosso dalla lista preferiti
-        wished.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                CustomerModel.addToTheWishlist(card);
-            } else {
-                CustomerModel.removeFromWishlist(card);
-            }
+        delete.setOnClickListener(view -> {
+            System.out.println("Cancellazione prodotto: " + card.getName());
+            firestore.collection("cards").document(card.getName())
+                    .delete()
+                    .addOnSuccessListener(e -> System.out.println("Cancellazione effettuata"))
+                    .addOnFailureListener(e -> System.out.println("Cancellazione fallita"));
         });
+
         return convertView;
     }
 }
