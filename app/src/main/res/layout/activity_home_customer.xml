@@ -35,7 +35,7 @@
                 app:layout_constraintVertical_bias="0.512"
                 app:srcCompat="@drawable/baseline_view_sidebar_24"
                 app:tint="#FFFFFF"
-                tools:ignore="UsingOnClickInXml,ImageContrastCheck" />
+                tools:ignore="UsingOnClickInXml,ImageContrastCheck,SpeakableTextPresentCheck" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/tickTitleCard"
@@ -72,7 +72,7 @@
             app:layout_constraintTop_toBottomOf="@+id/appbar">
 
             <ScrollView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -85,12 +85,12 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/text_Products"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/textAllCards"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="4dp"
-                        android:text="Products"
+                        android:text="All cards"
                         android:textColor="@color/white"
                         android:textSize="40sp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -99,10 +99,10 @@
                     <ListView
                         android:id="@+id/item_list"
                         android:layout_width="fill_parent"
-                        android:layout_height="578dp"
+                        android:layout_height="2000dp"
                         android:layout_marginBottom="6dp"
                         android:dividerHeight="1dp"
-                        tools:ignore="NestedScrolling" />
+                        android:minHeight="584dp" />
 
                 </LinearLayout>
             </ScrollView>

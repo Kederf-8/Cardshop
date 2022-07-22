@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dip"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageCardModify"
+            android:layout_width="100dp"
+            android:layout_height="130dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/nameCardModify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="125dp"
+            android:layout_marginTop="8dp"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/descriptionCardModify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="125dp"
+            android:layout_marginTop="45dp"
+            android:text=""
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:id="@+id/gameCardModify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="125dp"
+            android:layout_marginTop="80dp"
+            android:text=""
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:id="@+id/priceCardModify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Button_wishlist"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="107dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_toEndOf="@+id/ratingCardModify"
+            android:text=""
+            android:textSize="20sp" />
+
+        <RatingBar
+            android:id="@+id/ratingCardModify"
+            style="@android:style/Widget.DeviceDefault.RatingBar.Indicator"
+            android:layout_width="180dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="95dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="8dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressTint="@color/black"
+            android:rating="0"
+            android:scaleX="0.68"
+            android:scaleY="0.68"
+            android:stepSize="0.1" />
+
+        <ImageButton
+            android:id="@+id/modifyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="325dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/white"
+            app:srcCompat="@android:drawable/ic_menu_compass"
+            app:tint="#00BCD4" />
+
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
