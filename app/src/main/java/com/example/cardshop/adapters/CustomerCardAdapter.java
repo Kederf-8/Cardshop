@@ -24,18 +24,22 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerCardAdapter extends ArrayAdapter<CardModel> {
 
+    private List<CardModel> wishlist;
+
     public CustomerCardAdapter(Context context, int textViewResourceId, List<CardModel> objects) {
         super(context, textViewResourceId, objects);
+        wishlist = new ArrayList<>();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        List<CardModel> wishlist = CustomerModel.getWishlist();
+        wishlist = CustomerModel.getWishlist();
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.card_customer, null);
         TextView name = convertView.findViewById(R.id.Nome_item);
@@ -68,9 +72,11 @@ public class CustomerCardAdapter extends ArrayAdapter<CardModel> {
         }).addOnFailureListener(e -> {});
 
         //Si imposta lo switch a true se l'utente nella sua lista desideri salvata nel server ha il prodotto salvato
-        /*for (CardModel item : wishlist) {
-            if (item.getName().equals(card.getName())) {
-                wished.setChecked(true);
+        /*if(!wishlist.isEmpty()) {
+            for (CardModel item : wishlist) {
+                if (item.getName().equals(card.getName())) {
+                    wished.setChecked(true);
+                }
             }
         }*/
 

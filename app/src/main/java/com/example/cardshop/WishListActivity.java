@@ -10,9 +10,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.cardshop.adapters.CustomerCardAdapter;
 import com.example.cardshop.model.CardModel;
+import com.example.cardshop.model.CustomerModel;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,8 +27,9 @@ public class WishListActivity extends AppCompatActivity implements NavigationVie
 
     private DrawerLayout drawerLayout;
     private boolean statusSideBar;
-    HashMap<String, String> user;
-    ArrayList<CardModel> wishlist;
+    private HashMap<String, String> user;
+    private ArrayList<CardModel> wishlist;
+    private CustomerModel customer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,17 @@ public class WishListActivity extends AppCompatActivity implements NavigationVie
         drawerLayout = findViewById(R.id.side_navigation_menu_customer);
         statusSideBar = false;
         setNavigationViewListener();
+        //user = (HashMap<String, String>) getIntent().getSerializableExtra("user");
+        //wishlist = (ArrayList<CardModel>) getIntent().getSerializableExtra("wishlist");
+        //customer = new CustomerModel(user.get("UID"), user.get("email"), user.get("password"), wishlist);
+        //FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        wishlist = new ArrayList<>();
+
+        //Debug card example:
+        //      CardModel carta = new CardModel("id", "nome", "prezzo", "descrizione", "immaginiCarte/raikou.jpg", 4.5, "gioco");
+        //      wishlist.add(carta);
+
+        setAdapter();
     }
 
     public void openSideBarMenu(View view) {
@@ -76,5 +93,15 @@ public class WishListActivity extends AppCompatActivity implements NavigationVie
         statusSideBar = false;
         finish();
         return true;
+    }
+
+    public void setAdapter() {
+        ListView listView = findViewById(R.id.item_list);
+        CustomerCardAdapter adapter;
+        if (!wishlist.isEmpty()) {
+            adapter = new CustomerCardAdapter(this, R.layout.card_customer, wishlist);
+            listView.setAdapter(adapter);
+        } else
+            Toast.makeText(WishListActivity.this, "Wishlist is empty!", Toast.LENGTH_SHORT).show();
     }
 }

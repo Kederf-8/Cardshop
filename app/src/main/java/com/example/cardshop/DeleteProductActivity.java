@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.cardshop.adapters.AdminDeleteCardAdapter;
 import com.example.cardshop.model.CardModel;
@@ -29,7 +30,7 @@ public class DeleteProductActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide(); //nasconde la barra superiore
         firestore = FirebaseFirestore.getInstance();
         list = new LinkedList<>();
-        cardFetch(list);
+        cardFetch();
     }
 
     public void goBack(View view) {
@@ -37,7 +38,7 @@ public class DeleteProductActivity extends AppCompatActivity {
         finish();
     }
 
-    public void cardFetch(List<CardModel> list) {
+    public void cardFetch() {
         firestore.collection("cards")
                 .get()
                 .addOnCompleteListener(task -> {
@@ -47,17 +48,19 @@ public class DeleteProductActivity extends AppCompatActivity {
                             CardModel card = new CardModel((String) info.get("UID"), (String) info.get("name"), (String) info.get("price"), (String) info.get("description"), (String) info.get("image"), (Double) info.get("rating"), (String) info.get("game"));
                             list.add(card);
                         }
-                        setAdapter(list);
+                        setAdapter();
                     } else {
                         System.out.println("Error getting documents: " + task.getException());
                     }
                 });
     }
 
-    public void setAdapter(List<CardModel> cards) {
+    public void setAdapter() {
         ListView listView = findViewById(R.id.itemListDelete);
-        AdminDeleteCardAdapter adapter = new AdminDeleteCardAdapter(this, R.layout.card_admin_delete, cards);
-        listView.setAdapter(adapter);
+        if (!list.isEmpty()) {
+            AdminDeleteCardAdapter adapter = new AdminDeleteCardAdapter(this, R.layout.card_admin_delete, list);
+            listView.setAdapter(adapter);
+        } else Toast.makeText(DeleteProductActivity.this, "Card list is empty!", Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -3,13 +3,13 @@ package com.example.cardshop.model;
 import java.io.Serializable;
 
 public class CardModel implements Serializable {
-    public String UID;
-    public String name;
-    public String price;
-    public String description;
-    public String image;
-    public Double rating;
-    public String game;
+    private String UID;
+    private String name;
+    private String price;
+    private String description;
+    private String image;
+    private Double rating;
+    private String game;
 
     public CardModel(String UID, String name, String price, String description, String image, Double rating, String game) {
         this.UID = UID;

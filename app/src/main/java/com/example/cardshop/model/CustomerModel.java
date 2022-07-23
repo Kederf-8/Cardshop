@@ -16,12 +16,12 @@ public class CustomerModel extends UserModel implements Serializable {
     private static String email;
 
     @SuppressLint("StaticFieldLeak")
-    private static FirebaseFirestore db;
+    private static FirebaseFirestore firestore;
 
-    public CustomerModel(String UID, String email, String password) {
+    public CustomerModel(String UID, String email, String password, List<CardModel> wishlist) {
         super(UID, email, password);
-        CustomerModel.wishlist = new ArrayList<>();
-        db = FirebaseFirestore.getInstance();
+        CustomerModel.wishlist = wishlist;
+        firestore = FirebaseFirestore.getInstance();
     }
 
     public static List<CardModel> getWishlist() {
@@ -31,7 +31,7 @@ public class CustomerModel extends UserModel implements Serializable {
     public static void addToTheWishlist(CardModel card) {
         if (!wishlist.contains(card)) {
             wishlist.add(card);
-            user = db.collection("Users").document(email);
+            user = firestore.collection("Users").document(email);
             user.update("wishlist", FieldValue.arrayUnion(card.getName()));
         } else {
             System.out.println("Non si aggiunge l'elemento, già è nella lista preferiti");

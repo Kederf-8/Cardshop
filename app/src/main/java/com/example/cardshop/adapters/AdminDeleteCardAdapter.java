@@ -12,13 +12,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
 import com.example.cardshop.R;
-import com.example.cardshop.model.AdminModel;
 import com.example.cardshop.model.CardModel;
-import com.example.cardshop.model.CustomerModel;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -68,8 +67,8 @@ public class AdminDeleteCardAdapter extends ArrayAdapter<CardModel> {
             System.out.println("Cancellazione prodotto: " + card.getName());
             firestore.collection("cards").document(card.getName())
                     .delete()
-                    .addOnSuccessListener(e -> System.out.println("Cancellazione effettuata"))
-                    .addOnFailureListener(e -> System.out.println("Cancellazione fallita"));
+                    .addOnSuccessListener(e -> Toast.makeText(this.getContext(),"Deleted successfully", Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(e -> Toast.makeText(this.getContext(), "Deletion failed", Toast.LENGTH_SHORT).show());
         });
 
         return convertView;

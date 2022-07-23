@@ -2,6 +2,7 @@ package com.example.cardshop.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.cardshop.EditFieldsActivity;
 import com.example.cardshop.R;
 import com.example.cardshop.model.AdminModel;
 import com.example.cardshop.model.CardModel;
@@ -64,14 +66,9 @@ public class AdminModifyCardAdapter extends ArrayAdapter<CardModel> {
             image.setImageBitmap(bitmap);
         }).addOnFailureListener(e -> {});
 
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-
-        /*delete.setOnClickListener(view -> {
-            System.out.println("Cancellazione prodotto: " + card.getName());
-            firestore.collection("cards").document(card.getName())
-                    .delete()
-                    .addOnSuccessListener(e -> System.out.println("Cancellazione effettuata"))
-                    .addOnFailureListener(e -> System.out.println("Cancellazione fallita"));
+        /*modify.setOnClickListener(view -> {
+            EditFieldsActivity editFieldsActivity = new EditFieldsActivity();
+            editFieldsActivity.takeCardFields(card);
         });*/
 
         return convertView;
