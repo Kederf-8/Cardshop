@@ -100,12 +100,11 @@ public class EditFieldsActivity extends AppCompatActivity {
     }
 
     public String addImage() {
-        //utilizzato per selezionare il nome dell'immagine correttamente
         if (filePath != null) {
             String path = filePath.getPath();
             int index = path.lastIndexOf('/');
             String name = path.substring(index);
-            path = "/immaginiCarte" + name;
+            path = "immaginiCarte/" + name;
             return path;
         } else return null;
     }

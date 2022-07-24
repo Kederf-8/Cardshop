@@ -3,10 +3,9 @@ package com.example.cardshop.model;
 import java.io.Serializable;
 
 public class UserModel implements Serializable {
-    public String UID;
-    public String email;
-    public String password;
-
+    private String UID;
+    private String email;
+    private String password;
 
     UserModel(String UID, String email, String password) {
         this.UID = UID;

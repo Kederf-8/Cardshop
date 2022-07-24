@@ -1,19 +1,13 @@
 package com.example.cardshop;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.cardshop.adapters.AdminDeleteCardAdapter;
 import com.example.cardshop.adapters.AdminModifyCardAdapter;
 import com.example.cardshop.model.CardModel;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,7 +16,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class ModifyProductActivity extends AppCompatActivity {

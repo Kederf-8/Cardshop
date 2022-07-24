@@ -2,7 +2,6 @@ package com.example.cardshop.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -17,12 +16,8 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.cardshop.EditFieldsActivity;
 import com.example.cardshop.R;
-import com.example.cardshop.model.AdminModel;
 import com.example.cardshop.model.CardModel;
-import com.example.cardshop.model.CustomerModel;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 

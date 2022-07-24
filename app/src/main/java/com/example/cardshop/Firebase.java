@@ -1,14 +1,9 @@
 package com.example.cardshop;
 
-import androidx.annotation.NonNull;
-
 import com.example.cardshop.model.CardModel;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -51,43 +46,35 @@ public class Firebase {
     public static void GetDataUser(String ID, LoginActivity activity) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference doc = db.collection("Users").document(ID);
-        doc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                HashMap<String, Object> user = new HashMap<>();
-                user.put("UID", documentSnapshot.getId());
-                user.put("email", documentSnapshot.getString("email"));
-                user.put("password", documentSnapshot.getString("password"));
-                ArrayList<CardModel> wishlist = new ArrayList<>();
-                ArrayList<HashMap<String, Object>> listFirebase = (ArrayList<HashMap<String, Object>>) documentSnapshot.getData().get("wishlist");
-                for (HashMap<String, Object> product : listFirebase) {
-                    String uid = product.get("UID").toString();
-                    String name = product.get("name").toString();
-                    String image = product.get("image").toString();
-                    String price = product.get("price").toString();
-                    String description = product.get("description").toString();
-                    String game = product.get("game").toString();
-                    Double rating = Double.parseDouble(product.get("rating").toString());
-                    wishlist.add(new CardModel(uid, name, price, description, image, rating, game));
-                }
-                activity.CallbackLogin(1, user, wishlist, ID);
+        doc.get().addOnSuccessListener(documentSnapshot -> {
+            HashMap<String, Object> user = new HashMap<>();
+            user.put("UID", documentSnapshot.getId());
+            user.put("email", documentSnapshot.getString("email"));
+            user.put("password", documentSnapshot.getString("password"));
+            ArrayList<CardModel> wishlist = new ArrayList<>();
+            ArrayList<HashMap<String, Object>> listFirebase = (ArrayList<HashMap<String, Object>>) documentSnapshot.getData().get("wishlist");
+            for (HashMap<String, Object> product : listFirebase) {
+                String uid = product.get("UID").toString();
+                String name = product.get("name").toString();
+                String image = product.get("image").toString();
+                String price = product.get("price").toString();
+                String description = product.get("description").toString();
+                String game = product.get("game").toString();
+                Double rating = Double.parseDouble(product.get("rating").toString());
+                wishlist.add(new CardModel(uid, name, price, description, image, rating, game));
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                activity.CallbackLogin(-1, null, null, null);
-            }
-        });
+            activity.CallbackLogin(1, user, wishlist, ID);
+        }).addOnFailureListener(e -> activity.CallbackLogin(-1, null, null, null));
     }
 
     public static void SaveDataUser(String collection, String UID, Map<String, Object> object, SigninActivity activity) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference doc = db.collection(collection).document(UID);
         doc.set(object).addOnSuccessListener(unused -> {
-            System.out.println("utente registrato");
+            System.out.println("User altready registered");
             activity.CallbackRegister(1);
         }).addOnFailureListener(e -> {
-            System.out.println("probemi durante la registrazione dedll'utente");
+            System.out.println("User registration failed");
             activity.CallbackRegister(-1);
         });
     }

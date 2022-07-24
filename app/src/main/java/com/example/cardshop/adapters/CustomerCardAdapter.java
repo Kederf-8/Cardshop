@@ -13,14 +13,11 @@ import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import com.example.cardshop.R;
 import com.example.cardshop.model.CardModel;
 import com.example.cardshop.model.CustomerModel;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -50,8 +47,6 @@ public class CustomerCardAdapter extends ArrayAdapter<CardModel> {
         Switch wished = convertView.findViewById(R.id.Button_wishlist);
         ImageView image = convertView.findViewById(R.id.Image_item);
 
-        // In questo modo si prendono gli attributi specifici dell'elemento contenuto nella lista objects
-        // si utilizzano i metodi della classe Items
         CardModel card = getItem(position);
         name.setText(card.getName());
         description.setText(card.getDescription());
@@ -71,7 +66,6 @@ public class CustomerCardAdapter extends ArrayAdapter<CardModel> {
             image.setImageBitmap(bitmap);
         }).addOnFailureListener(e -> {});
 
-        //Si imposta lo switch a true se l'utente nella sua lista desideri salvata nel server ha il prodotto salvato
         /*if(!wishlist.isEmpty()) {
             for (CardModel item : wishlist) {
                 if (item.getName().equals(card.getName())) {
@@ -80,7 +74,6 @@ public class CustomerCardAdapter extends ArrayAdapter<CardModel> {
             }
         }*/
 
-        //Se lo switch cambia di stato l'item viene aggiunto o rimosso dalla lista preferiti
         wished.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 CustomerModel.addToTheWishlist(card);

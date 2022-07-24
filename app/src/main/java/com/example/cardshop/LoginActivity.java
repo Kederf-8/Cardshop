@@ -18,7 +18,6 @@ import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
-    //Boolean stopUserInteractions;
     static boolean admin;
 
     @Override
@@ -28,7 +27,6 @@ public class LoginActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide(); //nasconde la barra superiore
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signOut();
-        //stopUserInteractions = false;
     }
 
     public void Login(View view) {
@@ -71,7 +69,6 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         } else if (checkValidation > 0) {
-            //stopUserInteractions = true;
             Firebase.Login(email, password, this);
         }
     }
@@ -128,7 +125,6 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else if (operationState == -1) {
-            //stopUserInteractions = false;
             toast = "User doesn't exist | the email wasn't verified | the password is incorrect";
             Toast.makeText(this.getApplicationContext(), toast,
                     Toast.LENGTH_SHORT).show();

@@ -17,7 +17,6 @@ import com.example.cardshop.adapters.CustomerCardAdapter;
 import com.example.cardshop.model.CardModel;
 import com.example.cardshop.model.CustomerModel;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,8 +45,10 @@ public class WishListActivity extends AppCompatActivity implements NavigationVie
         wishlist = new ArrayList<>();
 
         //Debug card example:
-        //      CardModel carta = new CardModel("id", "nome", "prezzo", "descrizione", "immaginiCarte/raikou.jpg", 4.5, "gioco");
-        //      wishlist.add(carta);
+        //CardModel carta = new CardModel("id", "Athena", "20€", "SR05-EN013", "immaginiCarte/athena.jpg", 2.5, "Yu-gi-oh!");
+        //CardModel carta2 = new CardModel("id", "Raikou", "80€", "SL9", "immaginiCarte/raikou.jpg", 3.5, "Pokemon");
+        //wishlist.add(carta);
+        //wishlist.add(carta2);
 
         setAdapter();
     }

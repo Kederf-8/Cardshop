@@ -101,9 +101,6 @@ public class SigninActivity extends AppCompatActivity {
         user.put("email", email);
         user.put("password", password);
         ArrayList<CardModel> wishlist = new ArrayList<>();
-        //wishlist.add(new CardModel("1312412", "123123", "asfasfas", "fasfasf", "fasfasf", 0.0, 0, "fasfa", 0.0, 0));
-        //wishlist.add(new CardModel("1312412", "123123", "asfasfas", "fasfasf", "fasfasf", 0.0, 0, "fasfa", 0.0, 0));
-        //wishlist.add(new CardModel("1312412", "123123", "asfasfas", "fasfasf", "fasfasf", 0.0, 0, "fasfa", 0.0, 0));
         user.put("wishlist", wishlist);
         Firebase.SaveDataUser("Users", UID, user, this);
     }

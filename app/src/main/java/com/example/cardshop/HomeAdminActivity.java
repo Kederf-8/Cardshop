@@ -24,14 +24,17 @@ public class HomeAdminActivity extends AppCompatActivity {
 
     public void goToInsertCard(View view){
         startActivity(new Intent(this, InsertProductActivity.class));
+        finish();
     }
 
     public void goToRemoveCard(View view){
         startActivity(new Intent(this, DeleteProductActivity.class));
+        finish();
     }
 
     public void goToUpdateCard(View view){
         startActivity(new Intent(this, ModifyProductActivity.class));
+        finish();
     }
 
     public void logOut(View view){
