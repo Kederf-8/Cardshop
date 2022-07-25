@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     public void Login(View view) {
         String email = ((EditText) findViewById(R.id.editText_LoginEmail)).getText().toString().toLowerCase();
         String password = ((EditText) findViewById(R.id.editText_LoginPassword)).getText().toString().toLowerCase();
+
         int checkValidation = ValidationInputLogin(email, password);
         if (checkValidation < 0) {
             String toast;

@@ -46,7 +46,7 @@ public class InsertProductActivity extends AppCompatActivity {
         String path = filePath.getPath();
         int index = path.lastIndexOf('/');
         String name = path.substring(index);
-        path = "immaginiCarte/" + name + ".jpg";
+        path = "immaginiCarte" + name + ".jpg";
         return path;
     }
 

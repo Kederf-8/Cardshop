@@ -2,6 +2,7 @@ package com.example.cardshop.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.cardshop.EditFieldsActivity;
+import com.example.cardshop.ModifyProductActivity;
 import com.example.cardshop.R;
 import com.example.cardshop.model.CardModel;
 import com.google.firebase.storage.FirebaseStorage;
@@ -24,8 +27,12 @@ import com.google.firebase.storage.StorageReference;
 import java.util.List;
 
 public class AdminModifyCardAdapter extends ArrayAdapter<CardModel> {
+
+    Context context;
+
     public AdminModifyCardAdapter(Context context, int textViewResourceId, List<CardModel> objects) {
         super(context, textViewResourceId, objects);
+        this.context = context;
     }
 
     @SuppressLint({"ViewHolder", "InflateParams"})
@@ -61,10 +68,11 @@ public class AdminModifyCardAdapter extends ArrayAdapter<CardModel> {
             image.setImageBitmap(bitmap);
         }).addOnFailureListener(e -> {});
 
-        /*modify.setOnClickListener(view -> {
-            EditFieldsActivity editFieldsActivity = new EditFieldsActivity();
-            editFieldsActivity.takeCardFields(card);
-        });*/
+        modify.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), EditFieldsActivity.class);
+            intent.putExtra("Card", card);
+            context.startActivity(intent);
+        });
 
         return convertView;
     }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.cardshop.model.CardModel;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,38 +28,24 @@ public class EditFieldsActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide(); //nasconde la barra superiore
         card = (CardModel) getIntent().getSerializableExtra("Card");
         setCardFields();
-        Button modify = findViewById(R.id.editImageButton);
-        modify.setOnClickListener(v -> SelectImage());
+        Button modifyImage = findViewById(R.id.editImageButton);
+        modifyImage.setOnClickListener(v -> SelectImage());
         Button applyChanges = findViewById(R.id.editModifyButton);
         applyChanges.setOnClickListener(view -> {
-            EditText nameText = findViewById(R.id.editTextName);
-            String name = "";
-            if (nameText != null) name = nameText.toString();
-
-            EditText descText = findViewById(R.id.editTextDescription);
-            String description = "";
-            if (descText != null) description = descText.toString();
-
-            EditText priceText = findViewById(R.id.editTextPrice);
-            String price = "";
-            if (priceText != null) price = priceText.toString();
-
-            EditText gameText = findViewById(R.id.editTextGame);
-            String game = "";
-            if (gameText != null) game = gameText.toString();
-
-            EditText rateText = findViewById(R.id.editTextRating);
-            Double rating = 0.0d;
-            if (rateText != null) rating = Double.valueOf(rateText.toString());
+            String nameText = ((EditText) findViewById(R.id.editTextName_edit)).getText().toString();
+            String descText = ((EditText) findViewById(R.id.editTextDescription_edit)).getText().toString();
+            String priceText = ((EditText) findViewById(R.id.editTextPrice_edit)).getText().toString();
+            String gameText = ((EditText) findViewById(R.id.editTextGame_edit)).getText().toString();
+            Double rateText = Double.parseDouble(((EditText) findViewById(R.id.editTextRating_edit)).getText().toString());
 
             String image = addImage();
 
-            if (!name.equals(card.getName())) updateField("name", name);
-            if (!description.equals(card.getDescription())) updateField("description", description);
-            if (!price.equals(card.getPrice())) updateField("price", price);
-            if (!game.equals(card.getGame())) updateField("game", game);
-            if (!rating.equals(card.getRating())) updateField("rating", rating);
-            if (!image.equals(card.getImage())) updateField("image", image);
+            if (!nameText.equals(card.getName())) updateField("name", nameText);
+            if (!descText.equals(card.getDescription())) updateField("description", descText);
+            if (!priceText.equals(card.getPrice())) updateField("price", priceText);
+            if (!gameText.equals(card.getGame())) updateField("game", gameText);
+            if (!rateText.equals(card.getRating())) updateField("rating", rateText);
+            if (image != null && !image.equals(card.getImage())) updateField("image", image);
         });
     }
 
@@ -91,12 +78,16 @@ public class EditFieldsActivity extends AppCompatActivity {
 
     public void updateField(String field, String value) {
         firestore.collection("cards").document()
-                .update(field, value);
+                .update(field, value)
+                .addOnSuccessListener(e -> Toast.makeText(this,"Updated successfully", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(this, "Update failed", Toast.LENGTH_SHORT).show());
     }
 
     public void updateField(String field, Double value) {
         firestore.collection("cards").document()
-                .update(field, value);
+                .update(field, value)
+                .addOnSuccessListener(e -> Toast.makeText(this,"Updated successfully", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(this, "Update failed", Toast.LENGTH_SHORT).show());
     }
 
     public String addImage() {
@@ -104,7 +95,7 @@ public class EditFieldsActivity extends AppCompatActivity {
             String path = filePath.getPath();
             int index = path.lastIndexOf('/');
             String name = path.substring(index);
-            path = "immaginiCarte/" + name;
+            path = "immaginiCarte" + name;
             return path;
         } else return null;
     }

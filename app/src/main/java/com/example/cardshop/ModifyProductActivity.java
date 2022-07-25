@@ -63,11 +63,4 @@ public class ModifyProductActivity extends AppCompatActivity {
             listView.setAdapter(adapter);
         } else Toast.makeText(ModifyProductActivity.this, "Card list is empty!", Toast.LENGTH_SHORT).show();
     }
-
-    public void goToEditActivity(View view){
-        Intent intent = new Intent(ModifyProductActivity.this, EditFieldsActivity.class);
-        intent.putExtra("Card", card);
-        startActivity(intent);
-        finish();
-    }
 }
